@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 18:43:24 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/15 18:43:43 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/17 18:40:07 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,6 @@ int	parser(char *input, t_all *data)
 		start += end;
 		end = 0;
 	}
-	parser_2(data);
+	parser_replace_env(data);
 	return (0);
 }

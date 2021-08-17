@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 13:48:52 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/15 17:27:11 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/17 19:50:00 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@ size_t	ft_strlen(const char *s)
 	size_t	out;
 
 	out = 0;
-	while (*s != '\0')
-	{
+	if (!s)
+		return (out);
+	while (s[out])
 		out++;
-		s++;
-	}
 	return (out);
 }

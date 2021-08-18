@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 17:00:22 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/17 18:33:10 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/18 19:01:10 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,31 @@ void	replace_env_in_quot(char *cont, char **res, int *i, t_all *data);
 char	*skip_quotes(char *content);
 char	*replace_env(char *cont, t_all *data);
 void	parser_replace_env(t_all *data);
+
+/*
+** Executor
+*/
+
+void	ft_lstdelelem(t_list **lst, t_list *del);
+int		count_pipes(t_list *list, int ***fds);
+void	init_wr_rd_flag(t_all *data, int i, int count_pipe);
+int		executor(t_all *data);
+
+/*
+** Check buitins
+*/
+
+int		find_redirect(t_all *data, int **fds);
+int		check_builtins(t_all *data, int **fds);
+
+/*
+** Check bin
+*/
+
+void	free_matrix(void **matrix);
+char	**split_path(t_all *data);
+char	*search_in_dir(DIR **d, char *str, char *path);
+int		search_command(t_all *data, char **cmd);
+int		check_bin(t_all *data, int **fds);
 
 #endif

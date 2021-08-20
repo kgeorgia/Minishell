@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 16:04:23 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/18 19:18:23 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/20 16:24:15 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ int	find_redirect(t_all *data, int **fds)
 
 int	check_builtins(t_all *data, int **fds)
 {
-	// char	cwd[4097];
+	char	cwd[4097];
 
 	find_redirect(data, fds);
 	if (!ft_strncmp(data->args->content, "exit", 5))
 		exit(0);
-	// else if (!ft_strncmp(data->args->content, "pwd", 4))
-	// {
-	// 	ft_lstdelelem(&(data->args), data->args);
-	// 	ft_putendl_fd(getcwd(cwd, 4096), 1);
-	// }
+	else if (!ft_strncmp(data->args->content, "pwd", 4))
+	{
+		ft_lstdelelem(&(data->args), data->args);
+		ft_putendl_fd(getcwd(cwd, 4096), 1);
+	}
 	// else if (!ft_strncmp(data->args->content, "env", 4))
 	// 	ft_env(data);
 	// else if (!ft_strncmp(data->args->content, "echo", 5))

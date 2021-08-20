@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 17:00:22 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/18 19:01:10 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/20 20:22:55 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,25 @@ char	**split_path(t_all *data);
 char	*search_in_dir(DIR **d, char *str, char *path);
 int		search_command(t_all *data, char **cmd);
 int		check_bin(t_all *data, int **fds);
+
+/*
+** Ft_echo
+*/
+
+void	ft_echo(t_all *data);
+
+/*
+** Ft_env
+*/
+
+void	ft_env(t_all *data);
+
+/*
+** Ft_export
+*/
+
+char	**parse_env(char *str);
+int		env_is_valid(char *str);
+void	ft_export(t_all *data);
 
 #endif

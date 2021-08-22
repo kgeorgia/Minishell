@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 16:04:23 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/20 16:24:15 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/22 14:53:43 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ int	check_builtins(t_all *data, int **fds)
 		ft_lstdelelem(&(data->args), data->args);
 		ft_putendl_fd(getcwd(cwd, 4096), 1);
 	}
-	// else if (!ft_strncmp(data->args->content, "env", 4))
-	// 	ft_env(data);
-	// else if (!ft_strncmp(data->args->content, "echo", 5))
-	// 	ft_echo(data);
-	// else if (!ft_strncmp(data->args->content, "export", 7))
-	// 	ft_export(data);
-	// else if (!ft_strncmp(data->args->content, "unset", 6))
-	// 	ft_unset(data);
-	// else if (!ft_strncmp(data->args->content, "cd", 3))
-	// 	ft_cd(data);
+	else if (!ft_strncmp(data->args->content, "env", 4))
+		ft_env(data);
+	else if (!ft_strncmp(data->args->content, "echo", 5))
+		ft_echo(data);
+	else if (!ft_strncmp(data->args->content, "export", 7))
+		ft_export(data);
+	else if (!ft_strncmp(data->args->content, "unset", 6))
+		ft_unset(data);
+	else if (!ft_strncmp(data->args->content, "cd", 3))
+		ft_cd(data);
 	else
 		return (1);
 	return (0);

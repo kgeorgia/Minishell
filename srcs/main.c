@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 18:21:04 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/18 15:39:46 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/22 19:11:03 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	main(int argc, char **argv, char **env)
 		if (parser(input, &data))
 			return (1);
 		executor(&data);
-		print_args(data);
+		//print_args(data);
 		ft_lstclear(&(data.args), &free);
 		free(input);
 	}

@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 16:29:11 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/22 16:21:56 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/22 19:23:46 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,56 @@ int	search_command(t_all *data, char **cmd)
 	return (0);
 }
 
+char	**copy_args(t_all *data)
+{
+	char	**res;
+	t_list	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = data->args;
+	while (tmp && ft_strncmp(tmp->content, "|", 2))
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	if (!i)
+		return (NULL);
+	res = ft_calloc(i + 1, sizeof(char *));
+	tmp = data->args;
+	i = -1;
+	while (tmp && ft_strncmp(tmp->content, "|", 2))
+	{
+		res[++i] = ft_strdup(tmp->content);
+		tmp = tmp->next;
+	}
+	return (res);
+}
+
 int	check_bin(t_all *data, int **fds)
 {
 	char	*cmd;
+	char	**argv;
+	char	**envp;
+	int		ret;
 
 	find_redirect(data, fds);
 	if (search_command(data, &cmd))
 	{
-		ft_lstdelelem(&(data->args), data->args);
-		printf("%s\n", cmd);
+		argv = copy_args(data);
+		envp = copy_env(data);
+		if (!fork())
+		{
+			if (execve(cmd, argv, envp))
+			{
+				ft_putendl_fd("Error!!", 1);
+				exit(0);
+			}
+		}
+		wait(&ret);
+		free_matrix((void **)argv);
+		free_matrix((void **)envp);
+		free(cmd);
 	}
 	return (0);
 }

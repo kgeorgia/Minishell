@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export.c                                        :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/20 16:29:42 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/20 20:20:01 by kgeorgia         ###   ########.fr       */
+/*   Created: 2021/08/22 16:21:41 by kgeorgia          #+#    #+#             */
+/*   Updated: 2021/08/22 16:29:20 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	free_matrix(void **matrix)
+{
+	int	i;
+
+	i = -1;
+	if (matrix)
+	{
+		while (matrix[++i])
+			free(matrix[i]);
+		free(matrix);
+	}
+}
 
 char	**parse_env(char *str)
 {
@@ -45,22 +58,28 @@ int	env_is_valid(char *str)
 	return (res);
 }
 
-void	ft_export(t_all *data)
+void	ft_lstdelelem(t_list **lst, t_list *del)
 {
-	char	**key_value;
-	t_list	*list;
+	t_list	*p;
+	t_list	*tmp;
 
-	ft_lstdelelem(&(data->args), data->args);
-	while (data->args && ft_strncmp(data->args->content, "|", 2))
+	tmp = NULL;
+	p = *lst;
+	if (*lst && del)
 	{
-		if (env_is_valid(data->args->content))
+		if (*lst == del)
 		{
-			key_value = parse_env(data->args->content);
-			set_env(data, key_value[0], key_value[1]);
-			free_matrix(key_value);
+			*lst = (*lst)->next;
+			free(p);
+			return ;
 		}
-		else
-			ft_putendl_fd("Invalid arg!", 1);
-		ft_lstdelelem(&(data->args), data->args);
+		while (p && p->next != del)
+			p = p->next;
+		if (p)
+		{
+			tmp = p->next;
+			p->next = p->next->next;
+			free(tmp);
+		}
 	}
 }

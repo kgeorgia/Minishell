@@ -6,51 +6,11 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 16:29:11 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/18 19:17:05 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/22 16:21:56 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// static char	*search_bin(char *str, DIR **dir, struct dirent **d, t_data *param)
-// {
-// 	char		**paths;
-// 	char		*path;
-// 	int			i;
-
-// 	if (!(paths = split_path(param, str)))
-// 		return (NULL);
-// 	i = -1;
-// 	while (paths[++i])
-// 	{
-// 		*dir = opendir(paths[i]);
-// 		while ((*dir) && errno != EACCES && (*d = readdir(*dir)))
-// 		{
-// 			if (!ft_memcmp(str, (*d)->d_name, ft_strlen(str) + 1))
-// 			{
-// 				path = ft_strjoin(paths[i], "/");
-// 				free_matrix(paths);
-// 				return (path);
-// 			}
-// 		}
-// 		closedir(*dir);
-// 	}
-// 	free_matrix(paths);
-// 	return (NULL);
-// }
-
-void	free_matrix(void **matrix)
-{
-	int	i;
-
-	i = -1;
-	if (matrix)
-	{
-		while (matrix[++i])
-			free(matrix[i]);
-		free(matrix);
-	}
-}
 
 char	**split_path(t_all *data)
 {

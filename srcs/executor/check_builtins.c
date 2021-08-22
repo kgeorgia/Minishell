@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 16:04:23 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/22 14:53:43 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/22 15:55:20 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@ int	check_builtins(t_all *data, int **fds)
 	else if (!ft_strncmp(data->args->content, "cd", 3))
 		ft_cd(data);
 	else
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }

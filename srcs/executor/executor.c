@@ -6,11 +6,38 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 14:57:04 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/22 16:29:13 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/23 15:53:06 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	find_redirect(t_all *data)
+{
+	int		fd;
+	t_list	*tmp;
+
+	fd = 0;
+	tmp = data->args;
+	while (tmp && ft_strncmp(tmp->content, "|", 2))
+	{
+		if (!ft_strncmp(tmp->content, ">", 2) && tmp->next)
+			fd = open(tmp->next->content, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		else if (!ft_strncmp(tmp->content, ">>", 3) && tmp->next)
+			fd = open(tmp->next->content, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		else if (!ft_strncmp(tmp->content, "<", 3) && tmp->next)
+			fd = open(tmp->next->content, O_RDONLY, 0666);
+		if (fd)
+		{
+			dup2(fd, 1);
+			close(fd);
+			ft_lstdelelem(&(data->args), tmp->next);
+			ft_lstdelelem(&(data->args), tmp);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
 
 int	count_pipes(t_list *list, int ***fds)
 {

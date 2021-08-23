@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_bin.c                                        :+:      :+:    :+:   */
+/*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 16:29:11 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/22 19:23:46 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/23 16:42:04 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,40 +75,14 @@ int	search_command(t_all *data, char **cmd)
 	return (0);
 }
 
-char	**copy_args(t_all *data)
-{
-	char	**res;
-	t_list	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = data->args;
-	while (tmp && ft_strncmp(tmp->content, "|", 2))
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	if (!i)
-		return (NULL);
-	res = ft_calloc(i + 1, sizeof(char *));
-	tmp = data->args;
-	i = -1;
-	while (tmp && ft_strncmp(tmp->content, "|", 2))
-	{
-		res[++i] = ft_strdup(tmp->content);
-		tmp = tmp->next;
-	}
-	return (res);
-}
-
 int	check_bin(t_all *data, int **fds)
 {
 	char	*cmd;
 	char	**argv;
 	char	**envp;
-	int		ret;
 
-	find_redirect(data, fds);
+	(void)fds;
+	find_redirect(data);
 	if (search_command(data, &cmd))
 	{
 		argv = copy_args(data);
@@ -121,10 +95,38 @@ int	check_bin(t_all *data, int **fds)
 				exit(0);
 			}
 		}
-		wait(&ret);
+		post_cmd(data);
 		free_matrix((void **)argv);
 		free_matrix((void **)envp);
 		free(cmd);
 	}
 	return (0);
+}
+
+int	check_builtins(t_all *data, int **fds)
+{
+	char	cwd[4097];
+
+	(void)fds;
+	find_redirect(data);
+	if (!ft_strncmp(data->args->content, "exit", 5))
+		exit(0);
+	else if (!ft_strncmp(data->args->content, "pwd", 4))
+	{
+		ft_lstdelelem(&(data->args), data->args);
+		ft_putendl_fd(getcwd(cwd, 4096), 1);
+	}
+	else if (!ft_strncmp(data->args->content, "env", 4))
+		ft_env(data);
+	else if (!ft_strncmp(data->args->content, "echo", 5))
+		ft_echo(data);
+	else if (!ft_strncmp(data->args->content, "export", 7))
+		ft_export(data);
+	else if (!ft_strncmp(data->args->content, "unset", 6))
+		ft_unset(data);
+	else if (!ft_strncmp(data->args->content, "cd", 3))
+		ft_cd(data);
+	else
+		return (0);
+	return (1);
 }

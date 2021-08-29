@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 18:21:04 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/23 18:48:01 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/29 16:20:06 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	init_env(t_all *data, int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	i = -1;
+	data->env = NULL;
+	data->args = NULL;
 	while (env[++i])
 		ft_lstadd_back(&(data->env), ft_lstnew(ft_strdup(env[i])));
 	data->fd_std[0] = dup(0);
@@ -71,7 +73,8 @@ int	main(int argc, char **argv, char **env)
 		if (parser(input, &data))
 			return (1);
 		executor(&data);
-		//print_args(data);
+		dup2(data.fd_std[0], 0);
+		dup2(data.fd_std[1], 1);
 		ft_lstclear(&(data.args), &free);
 		free(input);
 	}

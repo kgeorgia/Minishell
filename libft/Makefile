@@ -1,4 +1,5 @@
 NAME = libft.a
+
 SRCS =	ft_atoi.c		ft_bzero.c		ft_calloc.c\
 		ft_isalnum.c	ft_isalpha.c	ft_isascii.c\
 		ft_isdigit.c	ft_isprint.c	ft_memccpy.c\
@@ -13,29 +14,35 @@ SRCS =	ft_atoi.c		ft_bzero.c		ft_calloc.c\
 		ft_itoa.c		ft_lstnew.c		ft_lstadd_front.c\
 		ft_lstsize.c	ft_lstlast.c	ft_lstadd_back.c\
 		ft_lstdelone.c	ft_lstclear.c	ft_lstiter.c\
-		ft_lstmap.c
+		ft_lstmap.c		get_next_line.c
 	
 SRCS_B = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c\
 		ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 
 OBJS = $(SRCS:.c=.o)
-HEADR = fibft.h
+
 OBJSB = $(SRCS_B:.c=.o)
+
 HEADR = libft.h
+
 CC = gcc
+
 RM = rm -f
+
 FLAGS = -Wall -Wextra -Werror
 
 all:	$(NAME)
 
 $(NAME):	$(OBJS) $(HEADR)
-	ar rcs $(NAME) $(OBJS)
+	@ar rcs $(NAME) $(OBJS)
+	@echo "Compiled "$(NAME)" successfully!"
 
 bonus :		$(OBJS)	$(OBJSB)
 	ar rcs $(NAME)	$(OBJS)	$(OBJSB)
 
 %.o: %.c
-	$(CC) $(FLAGS) -g -c $<
+	@gcc $(FLAGS) -g -c $<
+	@echo "Compiled "$<" successfully!"
 
 clean:
 	$(RM) $(OBJS)	$(OBJSB)

@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 17:00:22 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/23 17:59:49 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/29 19:37:18 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,9 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
+# include "../libft/libft.h"
 # include "../readline/history.h"
 # include "../readline/readline.h"
-// # include <readline/readline.h>
-// # include <readline/history.h>
-# include "../libft/libft.h"
 
 # define NO_WR_RD 0
 # define WRITE	1
@@ -38,7 +36,8 @@ typedef struct s_all
 {
 	t_list			*env;
 	t_list			*args;
-	int				wr_rd_flag;
+	char			**argv;
+	char			**envp;
 	int				fd_std[2];
 }					t_all;
 
@@ -75,9 +74,14 @@ void	parser_replace_env(t_all *data);
 ** Executor
 */
 
-int		find_redirect(t_all *data);
-int		count_pipes(t_list *list, int ***fds);
-void	init_wr_rd_flag(t_all *data, int i, int count_pipe);
+// void	find_redirect(t_all *data);
+// int		count_pipes(t_list *list);
+// void	init_wr_rd_flag(t_all *data, int i, int count_pipe);
+// int		executor(t_all *data);
+
+void	find_redirect(t_all *data);
+int		count_pipes(t_list *list);
+void	child_process(t_all *data);
 int		executor(t_all *data);
 
 /*
@@ -87,8 +91,9 @@ int		executor(t_all *data);
 char	**split_path(t_all *data);
 char	*search_in_dir(DIR **d, char *str, char *path);
 int		search_command(t_all *data, char **cmd);
-int		check_bin(t_all *data, int **fds);
-int		check_builtins(t_all *data, int **fds);
+int		check_bin(t_all *data);
+int		check_bin_2(t_all *data, int *fds);
+int		check_builtins(t_all *data);
 
 /*
 ** Ft_builtins
@@ -116,5 +121,19 @@ char	**copy_env(t_all *data);
 
 char	**copy_args(t_all *data);
 void	post_cmd(t_all *data);
+
+/*
+** Check command
+*/
+
+int		check_command(t_all *data);
+
+void	error(void);
+
+void	here_doc(t_all *data, t_list *tmp);
+void	open_in_file(t_all *data);
+void	open_out_file(t_all *data);
+void	set_in(int	fd[2]);
+void	set_out(int	fd[2]);
 
 #endif

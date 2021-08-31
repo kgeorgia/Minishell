@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/29 16:47:10 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/29 19:29:35 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/30 17:12:08 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	here_doc(t_all *data, t_list *tmp)
 	ft_lstdelelem(&(data->args), tmp->next);
 	ft_lstdelelem(&(data->args), tmp);
 	if (pipe(fd) == -1)
-		error();
+		error(data);
 	reader = fork();
 	if (reader == 0)
 	{
@@ -32,7 +32,6 @@ void	here_doc(t_all *data, t_list *tmp)
 		{
 			if (!ft_strncmp(line, limiter, ft_strlen(limiter) + 1))
 				exit(EXIT_SUCCESS);
-			// write(fd[1], line, ft_strlen(line));
 			ft_putendl_fd(line, fd[1]);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 16:29:11 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/29 18:57:46 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/30 15:51:03 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*search_in_dir(DIR **d, char *str, char *path)
 		dir = readdir(*d);
 		while (dir)
 		{
-			if (!ft_strncmp(str, dir->d_name, ft_strlen(dir->d_name)))
+			if (!ft_strncmp(str, dir->d_name, ft_strlen(str) + 1))
 			{
 				res = ft_strjoin(path, "/");
 				return (res);
@@ -102,162 +102,25 @@ int	check_builtins(t_all *data)
 int	check_bin(t_all *data)
 {
 	char	*cmd;
+	char	*path;
 
-	if (search_command(data, &cmd))
+	if (!ft_strncmp(data->argv[0], "./", 2))
+	{
+		get_env(data, "PWD", &path);
+		cmd = ft_strjoin(path, data->argv[0] + 1);
+		if (execve(cmd, data->argv, data->envp) == -1)
+			error(data);
+	}
+	else if (search_command(data, &cmd))
 	{
 		if (execve(cmd, data->argv, data->envp) == -1)
-			error();
+			error(data);
 	}
 	else
-		if (execve(data->argv[0], data->argv, data->envp) == -1)
-			error();
+	{
+		ft_putstr_fd("\033[31mminishell: ", 2);
+		ft_putstr_fd(data->argv[0], 2);
+		ft_putendl_fd(": command not found", 2);
+	}
 	return (1);
 }
-
-// int	check_command(t_all *data)
-// {
-// 	char	cwd[4097];
-// 	char	*cmd;
-
-// 	if (!ft_strncmp(data->argv[0], "exit", 5))
-// 		exit(0);
-// 	else if (!ft_strncmp(data->argv[0], "pwd", 4))
-// 		ft_putendl_fd(getcwd(cwd, 4096), 1);
-// 	else if (!ft_strncmp(data->argv[0], "env", 4))
-// 		ft_env(data);
-// 	else if (!ft_strncmp(data->argv[0], "echo", 5))
-// 		ft_echo(data);
-// 	else if (!ft_strncmp(data->argv[0], "export", 7))
-// 		ft_export(data);
-// 	else if (!ft_strncmp(data->argv[0], "unset", 6))
-// 		ft_unset(data);
-// 	else if (!ft_strncmp(data->argv[0], "cd", 3))
-// 		ft_cd(data);
-// 	else if (search_command(data, &cmd))
-// 	{
-// 		if (execve(cmd, data->argv, data->envp) == -1)
-// 			error();
-// 	}
-// 	else
-// 		if (execve(data->argv[0], data->argv, data->envp) == -1)
-// 			error();
-// 	return (1);
-// }
-
-// int	check_bin(t_all *data, int *fds)
-// {
-// 	pid_t	pid;
-// 	int		fd[2];
-// 	char	*cmd;
-// 	char	**argv;
-// 	char	**envp;
-
-// 	(void)fds;
-// 	if (pipe(fd) == -1)
-// 		error();
-// 	search_command(data, &cmd);
-// 	argv = copy_args(data);
-// 	envp = copy_env(data);
-// 	pid = fork();
-// 	if (pid == -1)
-// 		error();
-// 	if (pid == 0)
-// 	{
-// 		close(fd[0]);
-// 		dup2(fd[1], STDOUT_FILENO);
-// 		execve(cmd, argv, envp);
-// 	}
-// 	else
-// 	{
-// 		free_matrix((void **)argv);
-// 		free_matrix((void **)envp);
-// 		free(cmd);
-// 		close(fd[1]);
-// 		dup2(fd[0], STDIN_FILENO);
-// 		ft_lstdelelem(&(data->args), data->args);
-// 		waitpid(pid, NULL, 0);
-// 	}
-// 	return (1);
-// }
-
-// int	check_bin_2(t_all *data, int *fds)
-// {
-// 	pid_t	pid;
-// 	char	*cmd;
-// 	char	**argv;
-// 	char	**envp;
-
-// 	(void)fds;
-// 	search_command(data, &cmd);
-// 	argv = copy_args(data);
-// 	envp = copy_env(data);
-// 	pid = fork();
-// 	if (pid == -1)
-// 		error();
-// 	if (pid == 0)
-// 	{
-// 		execve(cmd, argv, envp);
-// 	}
-// 	else
-// 	{
-// 		free_matrix((void **)argv);
-// 		free_matrix((void **)envp);
-// 		free(cmd);
-// 		waitpid(pid, NULL, 0);
-// 	}
-// 	return (1);
-// }
-
-// int	check_bin(t_all *data, int *fds)
-// {
-// 	char	*cmd;
-// 	char	**argv;
-// 	char	**envp;
-
-// 	(void)fds;
-// 	if (search_command(data, &cmd))
-// 	{
-// 		argv = copy_args(data);
-// 		envp = copy_env(data);
-// 		if (!fork())
-// 		{
-// 			if (execve(cmd, argv, envp))
-// 			{
-// 				ft_putendl_fd("Error!!", 1);
-// 				exit(0);
-// 			}
-// 		}
-// 		post_cmd(data);
-// 		free_matrix((void **)argv);
-// 		free_matrix((void **)envp);
-// 		free(cmd);
-// 	}
-// 	return (0);
-// }
-
-// int	check_builtins(t_all *data, int *fds)
-// {
-// 	char	cwd[4097];
-
-// 	(void)fds;
-// 	if (!ft_strncmp(data->args->content, "exit", 5))
-// 		exit(0);
-// 	else if (!ft_strncmp(data->args->content, "pwd", 4))
-// 	{
-// 		ft_lstdelelem(&(data->args), data->args);
-// 		ft_putendl_fd(getcwd(cwd, 4096), 1);
-// 	}
-// 	else if (!ft_strncmp(data->args->content, "env", 4))
-// 		ft_env(data);
-// 	else if (!ft_strncmp(data->args->content, "echo", 5))
-// 		ft_echo(data);
-// 	else if (!ft_strncmp(data->args->content, "export", 7))
-// 		ft_export(data);
-// 	else if (!ft_strncmp(data->args->content, "unset", 6))
-// 		ft_unset(data);
-// 	else if (!ft_strncmp(data->args->content, "cd", 3))
-// 		ft_cd(data);
-// 	else
-// 		return (0);
-// 	return (1);
-// }

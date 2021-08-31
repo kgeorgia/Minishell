@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 17:00:22 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/29 19:37:18 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/30 17:11:16 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,9 @@ void	parser_replace_env(t_all *data);
 ** Executor
 */
 
-// void	find_redirect(t_all *data);
-// int		count_pipes(t_list *list);
-// void	init_wr_rd_flag(t_all *data, int i, int count_pipe);
-// int		executor(t_all *data);
-
-void	find_redirect(t_all *data);
 int		count_pipes(t_list *list);
 void	child_process(t_all *data);
+void	exec_cmd(t_all *data);
 int		executor(t_all *data);
 
 /*
@@ -91,9 +86,8 @@ int		executor(t_all *data);
 char	**split_path(t_all *data);
 char	*search_in_dir(DIR **d, char *str, char *path);
 int		search_command(t_all *data, char **cmd);
-int		check_bin(t_all *data);
-int		check_bin_2(t_all *data, int *fds);
 int		check_builtins(t_all *data);
+int		check_bin(t_all *data);
 
 /*
 ** Ft_builtins
@@ -120,15 +114,12 @@ char	**copy_env(t_all *data);
 */
 
 char	**copy_args(t_all *data);
-void	post_cmd(t_all *data);
+void	error(t_all *data);
+void	show_sort_env(t_all *data);
 
 /*
-** Check command
+** Redirect
 */
-
-int		check_command(t_all *data);
-
-void	error(void);
 
 void	here_doc(t_all *data, t_list *tmp);
 void	open_in_file(t_all *data);

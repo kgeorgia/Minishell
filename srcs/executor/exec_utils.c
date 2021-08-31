@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 16:21:41 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/23 14:11:53 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/30 16:54:35 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	env_is_valid(char *str)
 	res = 0;
 	key_tmp = find_key(str);
 	key = ft_strjoin(key_tmp, "=");
-	if (!ft_strncmp(key, str, ft_strlen(key)))
+	if (key && !ft_strncmp(key, str, ft_strlen(key)))
 		res = 1;
 	if (key)
 		free(key);

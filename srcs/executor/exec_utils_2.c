@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 14:21:39 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/29 19:37:24 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/30 18:50:39 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,60 @@ char	**copy_args(t_all *data)
 	return (res);
 }
 
-void	error(void)
+void	error(t_all *data)
 {
-	perror("\033[31mError");
+	ft_putstr_fd("\033[31mminishell: ", 2);
+	perror(data->argv[0]);
 	exit(EXIT_FAILURE);
 }
 
-void	post_cmd(t_all *data)
+char	*ret_first_or_last(t_list *lst, int first_last)
 {
-	int	ret;
+	char	*ret;
 
-	(void)data;
-	wait(&ret);
-	close(0);
-	close(1);
-	dup2(data->fd_std[0], 0);
-	dup2(data->fd_std[1], 1);
+	ret = lst->content;
+	if (!first_last)
+	{
+		while (lst)
+		{
+			if (ft_strncmp(ret, lst->content, ft_strlen(lst->content)) > 0)
+				ret = lst->content;
+			lst = lst->next;
+		}
+	}
+	else
+	{
+		while (lst)
+		{
+			if (ft_strncmp(ret, lst->content, ft_strlen(lst->content)) < 0)
+				ret = lst->content;
+			lst = lst->next;
+		}
+	}
+	return (ret);
+}
+
+void	show_sort_env(t_all *data)
+{
+	t_list	*lst;
+	char	*prev;
+	char	*current;
+
+	prev = ret_first_or_last(data->env, 0);
+	printf("declare -x %s\n", prev);
+	current = ret_first_or_last(data->env, 1);
+	while (ft_strncmp(prev, current, ft_strlen(current) + 1))
+	{
+		lst = data->env;
+		while (lst)
+		{
+			if (ft_strncmp(current, lst->content, ft_strlen(lst->content)) > 0
+				&& ft_strncmp(prev, lst->content, ft_strlen(lst->content)) < 0)
+				current = lst->content;
+			lst = lst->next;
+		}
+		printf("declare -x %s\n", current);
+		prev = current;
+		current = ret_first_or_last(data->env, 1);
+	}
 }

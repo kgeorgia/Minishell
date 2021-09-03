@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 16:21:41 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/30 16:54:35 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/09/03 19:02:26 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,24 +82,4 @@ void	ft_lstdelelem(t_list **lst, t_list *del)
 			free(tmp);
 		}
 	}
-}
-
-char	**copy_env(t_all *data)
-{
-	char	**res;
-	t_list	*tmp;
-	int		i;
-
-	i = ft_lstsize(data->env);
-	tmp = data->env;
-	if (!i)
-		return (NULL);
-	res = ft_calloc(i + 1, sizeof(char *));
-	i = -1;
-	while (tmp)
-	{
-		res[++i] = ft_strdup(tmp->content);
-		tmp = tmp->next;
-	}
-	return (res);
 }

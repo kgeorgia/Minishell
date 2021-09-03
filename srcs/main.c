@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 18:21:04 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/09/03 17:37:21 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/09/03 18:57:34 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,6 @@ void	print_args(t_all data)
 		ft_putendl_fd(tmp->content, 1);
 		tmp = tmp->next;
 	}
-}
-
-void	check_c(int sig)
-{
-	(void)sig;
-	rl_on_new_line();
-	rl_redisplay();
-	ft_putstr_fd("  \n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
 }
 
 int	main(int argc, char **argv, char **env)

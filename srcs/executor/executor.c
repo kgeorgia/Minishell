@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 14:57:04 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/09/03 18:07:48 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/09/03 18:21:07 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	exec_cmd(t_all *data)
 			error(data);
 		if (pid == 0)
 		{
-			printf("%s fgbfgfg flag\n", data->argv[0]);
 			check_bin(data);
 			exit(data->ret);
 		}

@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 17:00:22 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/09/03 17:29:30 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/09/03 19:02:49 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,15 @@ void	free_matrix(void **matrix);
 char	**parse_env(char *str);
 int		env_is_valid(char *str);
 void	ft_lstdelelem(t_list **lst, t_list *del);
-char	**copy_env(t_all *data);
 
 /*
 ** Executor utils 2
 */
 
-char	**copy_args(t_all *data);
 void	error(t_all *data);
+char	**copy_env(t_all *data);
+char	**copy_args(t_all *data);
+char	*ret_first_or_last(t_list *lst, int first_last);
 void	show_sort_env(t_all *data);
 
 /*
@@ -127,6 +128,7 @@ void	set_out(int	fd[2]);
 ** Signals
 */
 
+void	check_c(int sig);
 void	check_c_in_child(int sig);
 void	check_sl_in_child(int sig);
 

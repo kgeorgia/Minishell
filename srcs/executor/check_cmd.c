@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 16:29:11 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/09/03 18:14:18 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/09/03 18:35:59 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int	search_command(t_all *data, char **cmd)
 	{
 		d = opendir(paths_bin[i]);
 		tmp = search_in_dir(&d, data->argv[0], paths_bin[i]);
-		closedir(d);
+		if (d)
+			closedir(d);
 		if (tmp)
 			break ;
 	}

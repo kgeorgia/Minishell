@@ -6,11 +6,38 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 14:21:39 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/31 18:34:55 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/09/03 19:02:32 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	error(t_all *data)
+{
+	ft_putstr_fd("\033[31mminishell: ", 2);
+	perror(data->argv[0]);
+	exit(errno);
+}
+
+char	**copy_env(t_all *data)
+{
+	char	**res;
+	t_list	*tmp;
+	int		i;
+
+	i = ft_lstsize(data->env);
+	tmp = data->env;
+	if (!i)
+		return (NULL);
+	res = ft_calloc(i + 1, sizeof(char *));
+	i = -1;
+	while (tmp)
+	{
+		res[++i] = ft_strdup(tmp->content);
+		tmp = tmp->next;
+	}
+	return (res);
+}
 
 char	**copy_args(t_all *data)
 {
@@ -37,13 +64,6 @@ char	**copy_args(t_all *data)
 	if (data->args)
 		ft_lstdelelem(&(data->args), data->args);
 	return (res);
-}
-
-void	error(t_all *data)
-{
-	ft_putstr_fd("\033[31mminishell: ", 2);
-	perror(data->argv[0]);
-	exit(errno);
 }
 
 char	*ret_first_or_last(t_list *lst, int first_last)

@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 17:00:22 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/30 17:11:16 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/09/03 17:29:30 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,13 @@
 # include "../readline/history.h"
 # include "../readline/readline.h"
 
-# define NO_WR_RD 0
-# define WRITE	1
-# define WR_RD 2
-# define READ 3
-
 typedef struct s_all
 {
 	t_list			*env;
 	t_list			*args;
 	char			**argv;
 	char			**envp;
+	int				ret;
 	int				fd_std[2];
 }					t_all;
 
@@ -126,5 +122,12 @@ void	open_in_file(t_all *data);
 void	open_out_file(t_all *data);
 void	set_in(int	fd[2]);
 void	set_out(int	fd[2]);
+
+/*
+** Signals
+*/
+
+void	check_c_in_child(int sig);
+void	check_sl_in_child(int sig);
 
 #endif

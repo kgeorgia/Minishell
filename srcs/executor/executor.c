@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/08 14:57:04 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/30 16:31:19 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/09/03 18:07:48 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	count_pipes(t_list *list)
 	int	count;
 
 	count = 0;
+	signal(SIGINT, check_c_in_child);
+	signal(SIGQUIT, check_sl_in_child);
 	while (list)
 	{
 		if (!ft_strncmp(list->content, "|", 2))
@@ -41,11 +43,12 @@ void	child_process(t_all *data)
 		set_out(fd);
 		if (!check_builtins(data))
 			check_bin(data);
+		exit(data->ret);
 	}
 	else
 	{
 		set_in(fd);
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &(data->ret), 0);
 	}
 }
 
@@ -53,22 +56,28 @@ void	exec_cmd(t_all *data)
 {
 	pid_t	pid;
 
+	data->ret = 0;
 	if (!check_builtins(data))
 	{
 		pid = fork();
 		if (pid == -1)
 			error(data);
 		if (pid == 0)
+		{
+			printf("%s fgbfgfg flag\n", data->argv[0]);
 			check_bin(data);
+			exit(data->ret);
+		}
 		else
-			waitpid(pid, NULL, 0);
+			waitpid(pid, &(data->ret), 0);
 	}
 }
 
 int	executor(t_all *data)
 {
-	int	count_pipe;
-	int	i;
+	int		count_pipe;
+	char	*ret;
+	int		i;
 
 	i = -1;
 	count_pipe = count_pipes(data->args);
@@ -85,6 +94,9 @@ int	executor(t_all *data)
 	data->argv = copy_args(data);
 	data->envp = copy_env(data);
 	exec_cmd(data);
+	ret = ft_itoa(data->ret % 255);
+	set_env(data, "?", ret);
+	free(ret);
 	free_matrix((void **)data->argv);
 	free_matrix((void **)data->envp);
 	return (0);

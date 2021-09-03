@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/06 18:03:31 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/17 20:00:30 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/31 18:12:51 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ int	replace_dollar(char *cont, char **res, int *i, t_all *data)
 	key = NULL;
 	if (cont[*i] == '$')
 	{
-		key = find_key(cont + (*i) + 1);
+		if (!ft_strncmp(cont + (*i), "$?", 2))
+			key = ft_strdup("?");
+		else
+			key = find_key(cont + (*i) + 1);
 		*i += ft_strlen(key);
 		if (get_env(data, key, &value))
 		{

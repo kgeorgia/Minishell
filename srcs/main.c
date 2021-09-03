@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 18:21:04 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/29 16:20:06 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/09/03 17:37:21 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ void	init_env(t_all *data, int argc, char **argv, char **env)
 	data->args = NULL;
 	while (env[++i])
 		ft_lstadd_back(&(data->env), ft_lstnew(ft_strdup(env[i])));
+	ft_lstadd_back(&(data->env), ft_lstnew(ft_strdup("?=0")));
 	data->fd_std[0] = dup(0);
 	data->fd_std[1] = dup(1);
+	data->ret = 0;
 }
 
 void	print_args(t_all data)
@@ -57,6 +59,17 @@ void	print_args(t_all data)
 	}
 }
 
+void	check_c(int sig)
+{
+	(void)sig;
+	rl_on_new_line();
+	rl_redisplay();
+	ft_putstr_fd("  \n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_all	data;
@@ -64,8 +77,10 @@ int	main(int argc, char **argv, char **env)
 
 	ft_hello();
 	init_env(&data, argc, argv, env);
-	while (1)
+	while (42)
 	{
+		signal(SIGINT, check_c);
+		signal(SIGQUIT, SIG_IGN);
 		input = readline("\001\033[34m\002minishell> \001\033[37m\002");
 		if (!input)
 			exit(0);

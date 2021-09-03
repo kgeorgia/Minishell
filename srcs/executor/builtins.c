@@ -22,6 +22,13 @@ void	ft_cd(t_all *data)
 		set_env(data, "OLDPWD", pwd);
 		set_env(data, "PWD", getcwd(NULL, 0));
 	}
+	else
+	{
+		ft_putstr_fd("\033[31mminishell: cd: ", 2);
+		ft_putstr_fd(data->argv[1], 2);
+		ft_putendl_fd(": No such file or directory", 2);
+		data->ret = 1;
+	}
 	if (pwd)
 		free(pwd);
 }
@@ -58,12 +65,16 @@ void	ft_env(t_all *data)
 	{
 		while (list)
 		{
-			ft_putendl_fd(list->content, 1);
+			if (ft_strncmp(list->content, "?=", 2))
+				ft_putendl_fd(list->content, 1);
 			list = list->next;
 		}
 	}
 	else
+	{
 		ft_putendl_fd("\033[31mminishell: env: Too many arguments", 2);
+		data->ret = 1;
+	}
 }
 
 void	ft_export(t_all *data)
@@ -87,6 +98,7 @@ void	ft_export(t_all *data)
 			ft_putstr_fd("\033[31mminishell: export: ", 2);
 			ft_putstr_fd(data->argv[i], 2);
 			ft_putendl_fd(": not a valid identifier", 2);
+			data->ret = 1;
 		}
 	}
 }
@@ -109,6 +121,8 @@ void	ft_unset(t_all *data)
 				ft_lstdelelem(&(data->env), tmp);
 				break ;
 			}
+			else if (tmp->next == NULL)
+				data->ret = 1;
 			tmp = tmp->next;
 		}
 		if (str)

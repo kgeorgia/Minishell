@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 14:21:39 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/30 18:50:39 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/08/31 18:34:55 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	error(t_all *data)
 {
 	ft_putstr_fd("\033[31mminishell: ", 2);
 	perror(data->argv[0]);
-	exit(EXIT_FAILURE);
+	exit(errno);
 }
 
 char	*ret_first_or_last(t_list *lst, int first_last)
@@ -79,7 +79,8 @@ void	show_sort_env(t_all *data)
 	char	*current;
 
 	prev = ret_first_or_last(data->env, 0);
-	printf("declare -x %s\n", prev);
+	if (ft_strncmp(prev, "?=", 2))
+		printf("declare -x %s\n", prev);
 	current = ret_first_or_last(data->env, 1);
 	while (ft_strncmp(prev, current, ft_strlen(current) + 1))
 	{
@@ -91,7 +92,8 @@ void	show_sort_env(t_all *data)
 				current = lst->content;
 			lst = lst->next;
 		}
-		printf("declare -x %s\n", current);
+		if (ft_strncmp(current, "?=", 2))
+			printf("declare -x %s\n", current);
 		prev = current;
 		current = ret_first_or_last(data->env, 1);
 	}

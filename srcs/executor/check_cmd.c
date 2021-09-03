@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 16:29:11 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/30 15:51:03 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/09/03 18:14:18 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int	check_bin(t_all *data)
 		ft_putstr_fd("\033[31mminishell: ", 2);
 		ft_putstr_fd(data->argv[0], 2);
 		ft_putendl_fd(": command not found", 2);
+		data->ret = 127;
 	}
 	return (1);
 }

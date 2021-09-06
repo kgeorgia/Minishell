@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 16:29:11 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/09/03 18:35:59 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/09/06 16:39:53 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	check_builtins(t_all *data)
 	char	cwd[4097];
 
 	if (!ft_strncmp(data->argv[0], "exit", 5))
-		exit(0);
+		ft_exit(data);
 	else if (!ft_strncmp(data->argv[0], "pwd", 4))
 		ft_putendl_fd(getcwd(cwd, 4096), 1);
 	else if (!ft_strncmp(data->argv[0], "env", 4))

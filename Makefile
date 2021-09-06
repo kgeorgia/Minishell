@@ -6,7 +6,7 @@
 #    By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/17 16:07:07 by kgeorgia          #+#    #+#              #
-#    Updated: 2021/09/03 17:31:22 by kgeorgia         ###   ########.fr        #
+#    Updated: 2021/09/04 17:25:59 by kgeorgia         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,8 @@ LIBFT	=		./libft/libft.a
 SRC =			main.c\
 		parser/parser.c			parser/parser_utils.c		parser/replace_env.c\
 		executor/executor.c		executor/check_cmd.c		executor/builtins.c\
-		executor/exec_utils.c	executor/exec_utils_2.c		executor/redirect.c\
-		executor/signals.c
+		executor/builtins_2.c	executor/exec_utils.c		executor/exec_utils_2.c\
+		executor/redirect.c		executor/signals.c
 
 
 SRCS =			$(addprefix $(DIR_SRCS), $(SRC))

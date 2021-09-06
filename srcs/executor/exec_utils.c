@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 16:21:41 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/09/03 19:02:26 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/09/04 13:58:15 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,24 @@ void	ft_lstdelelem(t_list **lst, t_list *del)
 			p->next = p->next->next;
 			free(tmp);
 		}
+	}
+}
+
+void	ft_shlvl(t_all *data)
+{
+	int		level;
+	char	*value;
+	char	*new_value;
+
+	if (get_env(data, "SHLVL", &value))
+	{
+		level = ft_atoi(value);
+		level++;
+		new_value = ft_itoa(level);
+		set_env(data, "SHLVL", new_value);
+		if (value)
+			free(value);
+		if (new_value)
+			free(new_value);
 	}
 }

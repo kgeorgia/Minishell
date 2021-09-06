@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/06 18:03:31 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/08/31 18:12:51 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/09/04 17:46:37 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*replace_env(char *cont, t_all *data)
 	int		i;
 
 	i = -1;
-	res = NULL;
+	res = ft_strdup("");
 	while (cont[++i])
 	{
 		if (cont[i] == 39)

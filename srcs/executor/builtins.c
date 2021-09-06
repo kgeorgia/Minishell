@@ -1,36 +1,44 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/04 16:45:32 by kgeorgia          #+#    #+#             */
+/*   Updated: 2021/09/04 17:29:03 by kgeorgia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-void	ft_cd(t_all *data)
+void	ft_exit(t_all *data)
 {
-	char	*pwd;
-	char	*home;
+	int	i;
+	int	ret;
 
-	home = NULL;
-	get_env(data, "PWD", &pwd);
-	if (data->argv[1] == NULL)
+	i = 0;
+	ret = 0;
+	if (data->argv)
 	{
-		get_env(data, "HOME", &home);
-		if (!chdir(home))
+		ft_putendl_fd("exit", 1);
+		if (data->argv[1])
 		{
-			set_env(data, "OLDPWD", pwd);
-			set_env(data, "PWD", home);
-			free(home);
-		}
-	}
-	else if (!chdir(data->argv[1]))
-	{
-		set_env(data, "OLDPWD", pwd);
-		set_env(data, "PWD", getcwd(NULL, 0));
+			while (ft_isdigit(data->argv[1][i]))
+				i++;
+			if (data->argv[1][i] == '\0')
+				ret = ft_atoi(data->argv[1]);
+			else
+			{
+				blt_error(data->argv[0], data->argv[1],
+					"numeric argument required");
+				ret = 255;
+			}	
+		}		
 	}
 	else
-	{
-		ft_putstr_fd("\033[31mminishell: cd: ", 2);
-		ft_putstr_fd(data->argv[1], 2);
-		ft_putendl_fd(": No such file or directory", 2);
-		data->ret = 1;
-	}
-	if (pwd)
-		free(pwd);
+		ft_putendl_fd("\e[1A\e[11C" "exit", 1);
+	exit(ret);
 }
 
 void	ft_echo(t_all *data)

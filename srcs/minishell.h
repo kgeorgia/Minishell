@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 16:45:11 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/09/06 13:50:31 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/09/07 16:15:21 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ typedef struct s_all
 	int				ret;
 	int				fd_std[2];
 }					t_all;
-
-void	print_args(t_all data);
 
 /*
 ** Parser

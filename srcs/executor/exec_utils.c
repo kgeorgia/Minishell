@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 16:21:41 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/09/04 13:58:15 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/09/07 16:01:40 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	ft_lstdelelem(t_list **lst, t_list *del)
 		if (*lst == del)
 		{
 			*lst = (*lst)->next;
+			free(p->content);
 			free(p);
 			return ;
 		}
@@ -79,6 +80,7 @@ void	ft_lstdelelem(t_list **lst, t_list *del)
 		{
 			tmp = p->next;
 			p->next = p->next->next;
+			free(tmp->content);
 			free(tmp);
 		}
 	}

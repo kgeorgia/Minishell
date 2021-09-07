@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 18:21:04 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/09/06 17:06:33 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/09/07 16:15:17 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,6 @@ void	init_all(t_all *data, int argc, char **argv, char **env)
 	data->ret = 0;
 	ft_shlvl(data);
 }
-
-// void	print_args(t_all data)
-// {
-// 	t_list	*tmp;
-
-// 	tmp = data.args;
-// 	while (tmp)
-// 	{
-// 		printf("flag %s\n", tmp->content);
-// 		// ft_putendl_fd(tmp->content, 1);
-// 		tmp = tmp->next;
-// 	}
-// }
 
 void	del_null_args(t_all *data)
 {

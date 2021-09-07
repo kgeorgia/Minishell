@@ -6,7 +6,7 @@
 /*   By: kgeorgia <kgeorgia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 16:29:11 by kgeorgia          #+#    #+#             */
-/*   Updated: 2021/09/06 16:39:53 by kgeorgia         ###   ########.fr       */
+/*   Updated: 2021/09/07 16:10:05 by kgeorgia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	search_command(t_all *data, char **cmd)
 	i = -1;
 	tmp = NULL;
 	paths_bin = split_path(data);
+	if (!paths_bin)
+		return (0);
 	while (paths_bin[++i])
 	{
 		d = opendir(paths_bin[i]);
@@ -68,13 +70,11 @@ int	search_command(t_all *data, char **cmd)
 			break ;
 	}
 	free_matrix((void **)paths_bin);
-	if (tmp)
-	{
-		*cmd = ft_strjoin(tmp, data->argv[0]);
-		free(tmp);
-		return (1);
-	}
-	return (0);
+	if (!tmp)
+		return (0);
+	*cmd = ft_strjoin(tmp, data->argv[0]);
+	free(tmp);
+	return (1);
 }
 
 int	check_builtins(t_all *data)
@@ -117,7 +117,7 @@ int	check_bin(t_all *data)
 		if (execve(cmd, data->argv, data->envp) == -1)
 			error(data);
 	}
-	else
+	else if (execve(data->argv[0], data->argv, data->envp) == -1)
 	{
 		ft_putstr_fd("\033[31mminishell: ", 2);
 		ft_putstr_fd(data->argv[0], 2);
